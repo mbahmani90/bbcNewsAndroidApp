@@ -16,11 +16,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -32,12 +30,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.drawerlayout.R
-import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
@@ -62,15 +57,21 @@ fun NewsHeadlineListScreen(innerPadding : PaddingValues) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Button(
-            onClick = {
-                page = 1
-                newsHandlerViewModel.searchNewsHeadline(
-                    SearchParams(sources , apiKey , page))
-            }
-        ) {
-            Text("Search")
+        LaunchedEffect(Unit) {
+            page = 1
+            newsHandlerViewModel.searchNewsHeadline(
+                SearchParams(sources , apiKey , page))
         }
+
+//        Button(
+//            onClick = {
+//                page = 1
+//                newsHandlerViewModel.searchNewsHeadline(
+//                    SearchParams(sources , apiKey , page))
+//            }
+//        ) {
+//            Text("Search")
+//        }
 
         Row(
             modifier = Modifier.fillMaxWidth().padding(12.dp)
