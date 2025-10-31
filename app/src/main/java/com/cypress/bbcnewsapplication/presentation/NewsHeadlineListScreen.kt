@@ -2,9 +2,9 @@ package com.cypress.bbcnewsapplication.presentation
 
 
 import android.R
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,15 +20,12 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -38,7 +35,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -47,7 +43,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
@@ -59,18 +54,19 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Search
+import androidx.navigation.NavController
+import com.cypress.bbcnewsapplication.Screen
 import com.cypress.bbcnewsapplication.commonComposables.SearchFieldComposable
 import com.cypress.bbcnewsapplication.commonComposables.TitleIconComposable
 
 @Composable
-fun NewsHeadlineListScreen() {
+fun NewsHeadlineListScreen(navController: NavController) {
 
     val context = LocalContext.current
 
     val newsHandlerViewModel: NewsHandlerViewModel = koinViewModel()
     var sources by remember { mutableStateOf("trump") }
-    var apiKey by remember { mutableStateOf("efa31af9176c4a05b9f7a69d3c469cf3") }
+    var apiKey by remember { mutableStateOf("b0fa1fc2ee984834aaceb8f77d7f6185") }
 
     var page by remember { mutableIntStateOf(1) }
     val pageSize = 20
@@ -129,7 +125,7 @@ fun NewsHeadlineListScreen() {
                     )
 
                     Text(text = if(!newsHandlerState.isLoading) {
-                        "${newsHandlerState.newsDto?.totalResults ?: "No"} news"
+                        "${newsHandlerState.newsDomain?.totalResults ?: "No"} news"
                         }else{
                             "Loading..."
                         },
@@ -187,7 +183,7 @@ fun NewsHeadlineListScreen() {
                     Text(text = "${page}", color = Color.Black)
                     Spacer(modifier = Modifier.width(6.dp))
 
-                    newsHandlerState.newsDto?.let { newsDto ->
+                    newsHandlerState.newsDomain?.let { newsDto ->
 
                         IconButton(onClick = {
                             if (page * pageSize < newsDto.totalResults) {
@@ -209,11 +205,19 @@ fun NewsHeadlineListScreen() {
 
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
 
-                    newsHandlerState.newsDto?.let { newsList ->
+                    newsHandlerState.newsDomain?.let { newsList ->
                         items(newsList.articles) { item ->
                             Column(modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 4.dp)) {
+                                .padding(vertical = 4.dp)
+                                .clickable{
+                                    item.url?.let { articleUrl ->
+                                        navController.navigate(
+                                            Screen.ArticleDetails.createRoute(
+                                                Uri.encode(articleUrl)))
+                                    }
+
+                                }) {
                                 SubcomposeAsyncImage(
                                     model = ImageRequest.Builder(context)
                                         .data(item.urlToImage)
@@ -234,7 +238,7 @@ fun NewsHeadlineListScreen() {
                                                 Image(
                                                     painter = painterResource(R.drawable.ic_menu_report_image),
                                                     contentDescription = "placeholder",
-                                                    modifier = Modifier.size(96.dp) // smaller size
+                                                    modifier = Modifier.size(96.dp)
                                                 )
                                             }
                                         }

@@ -36,11 +36,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
+import com.cypress.bbcnewsapplication.domain.model.ArticleDomain
+import com.cypress.bbcnewsapplication.presentation.NewsDetailsScreen
 import com.cypress.bbcnewsapplication.presentation.NewsHeadlineListScreen
 import com.cypress.bbcnewsapplication.ui.theme.BbcNewsApplicationTheme
+
+sealed class Screen(val route: String) {
+    object HeadlineListScreen : Screen("headlineList")
+    object ArticleDetails : Screen("articleDetails/{articleUrl}") {
+        fun createRoute(articleUrl: String) = "articleDetails/$articleUrl"
+    }
+}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +63,22 @@ class MainActivity : ComponentActivity() {
         setContent {
             BbcNewsApplicationTheme {
 
-                NewsHeadlineListScreen()
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = Screen.HeadlineListScreen.route) {
+
+                    composable(Screen.HeadlineListScreen.route) {
+                        NewsHeadlineListScreen(navController)
+                    }
+
+                    composable(
+                        route = Screen.ArticleDetails.route,
+                        arguments = listOf(navArgument("articleUrl") { type = NavType.StringType })
+                    ) { backStackEntry ->
+                        val articleUrl = backStackEntry.arguments?.getString("articleUrl") ?: ""
+                        NewsDetailsScreen(articleUrl)
+                    }
+                }
+
             }
         }
     }

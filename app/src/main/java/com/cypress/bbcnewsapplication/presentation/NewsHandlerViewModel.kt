@@ -5,15 +5,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cypress.bbcnewsapplication.data.dto.NewsDto
-import com.cypress.bbcnewsapplication.domain.repository.NewsHandlerRepository
+import com.cypress.bbcnewsapplication.data.repository.NewsResource
+import com.cypress.bbcnewsapplication.domain.model.NewsDomain
+import com.cypress.bbcnewsapplication.domain.usecase.NewsHeadLineUseCase
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 data class NewsHandlerState(
     var isLoading: Boolean = false,
     var isSuccess: Boolean = false,
     var errorMessage: String = "",
-    var newsDto: NewsDto? = null
+    var newsDomain: NewsDomain? = null
 )
 
 data class SearchParams(
@@ -23,30 +27,33 @@ data class SearchParams(
 )
 
 class NewsHandlerViewModel(
-    private val newsHandlerRepository: NewsHandlerRepository
+    private val newsHandlerUserCass: NewsHeadLineUseCase
 ) : ViewModel() {
 
     private var _newsHandlerState = mutableStateOf(NewsHandlerState())
     val newsHandlerState : State<NewsHandlerState> = _newsHandlerState
 
-
     fun searchNewsHeadline(searchParams: SearchParams) {
 
-        viewModelScope.launch(Dispatchers.IO){
-            _newsHandlerState.value = _newsHandlerState.value.copy(
-                isLoading = true , isSuccess = false , errorMessage = "")
-            try{
-                val response = newsHandlerRepository.searchNews(searchParams)
-                _newsHandlerState.value = _newsHandlerState.value.copy(
-                    isLoading = false, isSuccess = true , errorMessage = "" ,
-                    newsDto = response.data
-                )
-            }catch(e: Exception){
-                _newsHandlerState.value = _newsHandlerState.value.copy(
-                    isLoading = false, isSuccess = false , errorMessage = "${e.message}"
-                )
+        newsHandlerUserCass.invoke(searchParams).onEach { result ->
+            when(result){
+                is NewsResource.Error -> {
+                    _newsHandlerState.value = _newsHandlerState.value.copy(
+                        isLoading = false, isSuccess = false , errorMessage = "${result.message}"
+                    )
+                }
+                is NewsResource.Loading -> {
+                    _newsHandlerState.value = _newsHandlerState.value.copy(
+                        isLoading = true , isSuccess = false , errorMessage = "")
+                }
+                is NewsResource.Success -> {
+                    _newsHandlerState.value = _newsHandlerState.value.copy(
+                        isLoading = false, isSuccess = true , errorMessage = "" ,
+                        newsDomain = result.data
+                    )
+                }
             }
-        }
+        }.launchIn(viewModelScope)
 
     }
 
