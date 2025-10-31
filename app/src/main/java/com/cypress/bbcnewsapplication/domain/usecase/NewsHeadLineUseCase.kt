@@ -4,7 +4,7 @@ import com.cypress.bbcnewsapplication.data.dto.toDomain
 import com.cypress.bbcnewsapplication.data.repository.NewsHandlerRepository
 import com.cypress.bbcnewsapplication.data.repository.NewsResource
 import com.cypress.bbcnewsapplication.domain.model.NewsDomain
-import com.cypress.bbcnewsapplication.presentation.SearchParams
+import com.cypress.bbcnewsapplication.presentation.newsHeadline.SearchParams
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

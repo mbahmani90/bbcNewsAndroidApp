@@ -3,8 +3,12 @@ package com.cypress.bbcnewsapplication.di
 import com.cypress.bbcnewsapplication.data.remote.NewsClientApi
 import com.cypress.bbcnewsapplication.data.repository.NewsHandlerRepository
 import com.cypress.bbcnewsapplication.data.repository.NewsHandlerRepositoryImp
+import com.cypress.bbcnewsapplication.data.repository.NewsSourceRepository
+import com.cypress.bbcnewsapplication.data.repository.NewsSourceRepositoryImp
 import com.cypress.bbcnewsapplication.domain.usecase.NewsHeadLineUseCase
-import com.cypress.bbcnewsapplication.presentation.NewsHandlerViewModel
+import com.cypress.bbcnewsapplication.domain.usecase.NewsSourceUseCase
+import com.cypress.bbcnewsapplication.presentation.newsHeadline.NewsHandlerViewModel
+import com.cypress.bbcnewsapplication.presentation.sourceList.SourceViewModel
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -32,6 +36,11 @@ val platformModules = module {
     singleOf(::NewsHandlerRepositoryImp).bind<NewsHandlerRepository>()
     single { NewsHeadLineUseCase(get()) }
     viewModelOf(::NewsHandlerViewModel)
+
+
+    singleOf(::NewsSourceRepositoryImp).bind<NewsSourceRepository>()
+    single { NewsSourceUseCase(get()) }
+    viewModelOf(::SourceViewModel)
 
 
 }

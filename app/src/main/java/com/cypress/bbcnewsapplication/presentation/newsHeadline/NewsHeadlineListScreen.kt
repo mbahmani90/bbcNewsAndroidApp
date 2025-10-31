@@ -1,4 +1,4 @@
-package com.cypress.bbcnewsapplication.presentation
+package com.cypress.bbcnewsapplication.presentation.newsHeadline
 
 
 import android.R
@@ -230,8 +230,7 @@ fun NewsHeadlineListScreen(navController: NavController) {
                                         .diskCachePolicy(CachePolicy.ENABLED)
                                         .build(),
                                     contentDescription = "${item.title} image",
-                                    modifier = Modifier
-                                        .fillMaxSize()
+                                    modifier = Modifier.fillMaxSize()
                                 ) {
                                     when (painter.state) {
                                         is AsyncImagePainter.State.Loading -> {

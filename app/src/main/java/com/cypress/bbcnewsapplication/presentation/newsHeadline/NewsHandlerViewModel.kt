@@ -1,17 +1,14 @@
-package com.cypress.bbcnewsapplication.presentation
+package com.cypress.bbcnewsapplication.presentation.newsHeadline
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cypress.bbcnewsapplication.data.dto.NewsDto
 import com.cypress.bbcnewsapplication.data.repository.NewsResource
 import com.cypress.bbcnewsapplication.domain.model.NewsDomain
 import com.cypress.bbcnewsapplication.domain.usecase.NewsHeadLineUseCase
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 data class NewsHandlerState(
     var isLoading: Boolean = false,

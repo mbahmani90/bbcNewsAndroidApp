@@ -2,7 +2,7 @@ package com.cypress.bbcnewsapplication.data.repository
 
 import com.cypress.bbcnewsapplication.data.dto.NewsDto
 import com.cypress.bbcnewsapplication.data.remote.NewsClientApi
-import com.cypress.bbcnewsapplication.presentation.SearchParams
+import com.cypress.bbcnewsapplication.presentation.newsHeadline.SearchParams
 
 sealed class NewsResource<T>(val data: T? = null , val message: String? = null){
     class Loading<T>() : NewsResource<T>()

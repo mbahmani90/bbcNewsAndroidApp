@@ -1,6 +1,7 @@
 package com.cypress.bbcnewsapplication.data.remote
 
 import com.cypress.bbcnewsapplication.data.dto.NewsDto
+import com.cypress.bbcnewsapplication.data.dto.SourceDto
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
@@ -15,5 +16,10 @@ interface NewsClientApi {
         @Query("apiKey") apiKey: String,
         @Query("page") page: Int
     ): NewsDto
+
+    @GET("v2/top-headlines/sources")
+    suspend fun searchSources(
+        @Query("apiKey") apiKey: String,
+    ): SourceDto
 
 }

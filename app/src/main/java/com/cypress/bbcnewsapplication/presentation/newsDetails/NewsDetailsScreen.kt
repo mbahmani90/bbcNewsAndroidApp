@@ -1,4 +1,4 @@
-package com.cypress.bbcnewsapplication.presentation
+package com.cypress.bbcnewsapplication.presentation.newsDetails
 
 import android.net.Uri
 import androidx.compose.foundation.layout.Box
@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import com.cypress.bbcnewsapplication.commonComposables.WebViewWithLoading
 
 @Composable
