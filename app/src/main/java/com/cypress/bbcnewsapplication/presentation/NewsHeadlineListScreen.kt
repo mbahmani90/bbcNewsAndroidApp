@@ -65,7 +65,8 @@ fun NewsHeadlineListScreen(navController: NavController) {
     val context = LocalContext.current
 
     val newsHandlerViewModel: NewsHandlerViewModel = koinViewModel()
-    var sources by remember { mutableStateOf("trump") }
+    var sources by remember { mutableStateOf("bbc-news") }
+    var query by remember { mutableStateOf("") }
     var apiKey by remember { mutableStateOf("b0fa1fc2ee984834aaceb8f77d7f6185") }
 
     var page by remember { mutableIntStateOf(1) }
@@ -75,7 +76,7 @@ fun NewsHeadlineListScreen(navController: NavController) {
     LaunchedEffect(Unit) {
         page = 1
         newsHandlerViewModel.searchNewsHeadline(
-            SearchParams(sources , apiKey , page))
+            SearchParams(sources , query, apiKey, page))
     }
 
     Scaffold(
@@ -136,8 +137,11 @@ fun NewsHeadlineListScreen(navController: NavController) {
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                SearchFieldComposable(Modifier.weight(1f).padding(8.dp)) {
-                    println("Search!!!")
+                SearchFieldComposable(Modifier.weight(1f).padding(8.dp)) { keyword ->
+                    page = 1
+                    newsHandlerViewModel.searchNewsHeadline(
+                        SearchParams(sources, keyword, apiKey, page)
+                    )
                 }
 
             }
@@ -170,7 +174,7 @@ fun NewsHeadlineListScreen(navController: NavController) {
                         if (page > 1)
                             page--
                         newsHandlerViewModel.searchNewsHeadline(
-                            SearchParams(sources, apiKey, page)
+                            SearchParams(sources, query, apiKey, page)
                         )
                     }) {
                         Icon(
@@ -189,7 +193,7 @@ fun NewsHeadlineListScreen(navController: NavController) {
                             if (page * pageSize < newsDto.totalResults) {
                                 page++
                                 newsHandlerViewModel.searchNewsHeadline(
-                                    SearchParams(sources, apiKey, page)
+                                    SearchParams(sources, query, apiKey, page)
                                 )
                             }
                         }) {

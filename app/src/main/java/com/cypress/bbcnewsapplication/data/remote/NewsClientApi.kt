@@ -10,8 +10,8 @@ interface NewsClientApi {
 
     @GET("v2/top-headlines")
     suspend fun searchNewsTopHeadline(
-//        @Query("sources") source: String,
-        @Query("q") source: String,
+        @Query("sources") source: String,
+        @Query("q") query: String,
         @Query("apiKey") apiKey: String,
         @Query("page") page: Int
     ): NewsDto

@@ -22,6 +22,7 @@ data class NewsHandlerState(
 
 data class SearchParams(
     var source: String,
+    var query: String,
     var apiKey: String,
     var page: Int = 1
 )
