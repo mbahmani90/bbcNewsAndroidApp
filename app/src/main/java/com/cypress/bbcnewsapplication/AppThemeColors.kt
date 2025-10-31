@@ -20,6 +20,7 @@ object AppThemeColors {
     )
 
     var lightBlue = Color(0xFF2196F3)
+    var focusedSearchColor = Color(0xFF212121)
     var lightGray = Color(0xFFAEAEAE)
     var newsTitleColor = Color(0xFF212121)
     var descriptionColor = Color(0xFF8E8E8E)

@@ -34,7 +34,7 @@ class NewsHandlerViewModel(
 
         viewModelScope.launch(Dispatchers.IO){
             _newsHandlerState.value = _newsHandlerState.value.copy(
-                isLoading = true , isSuccess = false , errorMessage = "" , newsDto = null)
+                isLoading = true , isSuccess = false , errorMessage = "")
             try{
                 val response = newsHandlerRepository.searchNews(searchParams)
                 _newsHandlerState.value = _newsHandlerState.value.copy(
@@ -43,8 +43,7 @@ class NewsHandlerViewModel(
                 )
             }catch(e: Exception){
                 _newsHandlerState.value = _newsHandlerState.value.copy(
-                    isLoading = false, isSuccess = false , errorMessage = "${e.message}" ,
-                    newsDto = null
+                    isLoading = false, isSuccess = false , errorMessage = "${e.message}"
                 )
             }
         }
