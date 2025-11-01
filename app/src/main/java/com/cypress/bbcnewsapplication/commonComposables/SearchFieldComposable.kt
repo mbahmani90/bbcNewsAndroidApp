@@ -28,7 +28,7 @@ fun SearchFieldComposable(modifier: Modifier, onSearch : (String) -> Unit ){
         placeholder = { Text("Search...") },
         singleLine = true,
         trailingIcon = {
-            Icon(modifier = Modifier.clickable {
+            Icon(modifier = Modifier.noFeedbackClickable {
                 onSearch(searchText)
             },
                 imageVector = Icons.Filled.Search,

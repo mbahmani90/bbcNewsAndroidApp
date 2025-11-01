@@ -1,5 +1,7 @@
 package com.cypress.bbcnewsapplication.presentation.sourceList
 
+import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.cypress.bbcnewsapplication.Screen
 import com.cypress.bbcnewsapplication.data.repository.SourceParams
 import org.koin.androidx.compose.koinViewModel
 
@@ -50,7 +53,7 @@ fun SourceListScreen(navController: NavController) {
                 modifier = Modifier.fillMaxSize().padding(paddingValues)
             ) {
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(2), // 2 columns in the grid
+                    columns = GridCells.Fixed(2),
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(8.dp),
                     horizontalArrangement = Arrangement.Center,
@@ -61,7 +64,12 @@ fun SourceListScreen(navController: NavController) {
                             Card(
                                 modifier = Modifier
                                     .padding(8.dp)
-                                    .aspectRatio(2f),
+                                    .aspectRatio(2f)
+                                    .clickable{
+                                        navController.navigate(
+                                            Screen.HeadlineListScreen.createRoute(
+                                                 apiKey , item.id , item.name))
+                                    },
                                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                             ) {
                                 Box(

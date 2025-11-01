@@ -58,16 +58,18 @@ import androidx.navigation.NavController
 import com.cypress.bbcnewsapplication.Screen
 import com.cypress.bbcnewsapplication.commonComposables.SearchFieldComposable
 import com.cypress.bbcnewsapplication.commonComposables.TitleIconComposable
+import com.cypress.bbcnewsapplication.commonComposables.noFeedbackClickable
 
 @Composable
-fun NewsHeadlineListScreen(navController: NavController) {
+fun NewsHeadlineListScreen(navController: NavController ,
+                           apiKey: String,
+                           sourceId: String,
+                           sourceName: String) {
 
     val context = LocalContext.current
 
     val newsHandlerViewModel: NewsHandlerViewModel = koinViewModel()
-    var sources by remember { mutableStateOf("bbc-news") }
     var query by remember { mutableStateOf("") }
-    var apiKey by remember { mutableStateOf("b0fa1fc2ee984834aaceb8f77d7f6185") }
 
     var page by remember { mutableIntStateOf(1) }
     val pageSize = 20
@@ -76,7 +78,7 @@ fun NewsHeadlineListScreen(navController: NavController) {
     LaunchedEffect(Unit) {
         page = 1
         newsHandlerViewModel.searchNewsHeadline(
-            SearchParams(sources , query, apiKey, page))
+            SearchParams(sourceId , query, apiKey, page))
     }
 
     Scaffold(
@@ -93,7 +95,9 @@ fun NewsHeadlineListScreen(navController: NavController) {
                     modifier = Modifier
                         .size(24.dp)
                         .padding(2.dp)
-                        .clickable {  },
+                        .noFeedbackClickable {
+                            navController.popBackStack()
+                        },
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
                     tint = AppThemeColors.focusedSearchColor)
@@ -119,7 +123,7 @@ fun NewsHeadlineListScreen(navController: NavController) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(0.dp)
                 ) {
-                    Text(text = "BBC",
+                    Text(text = sourceName,
                         fontSize = 14.sp,
                         fontWeight = Bold,
                         lineHeight = 14.sp
@@ -140,7 +144,7 @@ fun NewsHeadlineListScreen(navController: NavController) {
                 SearchFieldComposable(Modifier.weight(1f).padding(8.dp)) { keyword ->
                     page = 1
                     newsHandlerViewModel.searchNewsHeadline(
-                        SearchParams(sources, keyword, apiKey, page)
+                        SearchParams(sourceId, keyword, apiKey, page)
                     )
                 }
 
@@ -174,7 +178,7 @@ fun NewsHeadlineListScreen(navController: NavController) {
                         if (page > 1)
                             page--
                         newsHandlerViewModel.searchNewsHeadline(
-                            SearchParams(sources, query, apiKey, page)
+                            SearchParams(sourceId, query, apiKey, page)
                         )
                     }) {
                         Icon(
@@ -193,7 +197,7 @@ fun NewsHeadlineListScreen(navController: NavController) {
                             if (page * pageSize < newsDto.totalResults) {
                                 page++
                                 newsHandlerViewModel.searchNewsHeadline(
-                                    SearchParams(sources, query, apiKey, page)
+                                    SearchParams(sourceId, query, apiKey, page)
                                 )
                             }
                         }) {
