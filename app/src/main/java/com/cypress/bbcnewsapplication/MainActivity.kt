@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             BbcNewsApplicationTheme {
 
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = Screen.FingerPrintScreen.route) {
+                NavHost(navController = navController, startDestination = Screen.SourceListScreen.route) {
 
                     composable(
                         route = Screen.FingerPrintScreen.route

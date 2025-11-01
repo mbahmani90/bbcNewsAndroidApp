@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,8 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.cypress.bbcnewsapplication.R
 import androidx.navigation.NavController
+import com.cypress.bbcnewsapplication.R
 import com.cypress.bbcnewsapplication.Screen
 import com.cypress.bbcnewsapplication.commonComposables.noFeedbackClickable
 import org.koin.compose.koinInject
@@ -38,14 +37,14 @@ fun FingerPrintScreen(navController: NavController) {
     val fingerPrintInterface: FingerPrintInterface = koinInject()
     var bioAuthResultState by remember { mutableStateOf("") }
     val biometricPrompt by remember { mutableStateOf(BiometricPrompt(activity,
-        BiometricAuthCallback({
+        BiometricAuthCallback {
             bioAuthResultState = it
-            if(it == "Authentication Success"){
+            if (it == "Authentication Success") {
                 navController.navigate(
                     Screen.SourceListScreen.createRoute()
                 )
             }
-        }))) }
+        })) }
 
     LaunchedEffect(Unit) {
 

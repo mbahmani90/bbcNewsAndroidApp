@@ -20,6 +20,7 @@ interface NewsClientApi {
     @GET("v2/top-headlines/sources")
     suspend fun searchSources(
         @Query("apiKey") apiKey: String,
+        @Query("category") category: String
     ): SourceDto
 
 }

@@ -40,7 +40,7 @@ fun TitleIconComposable(){
         contentDescription = "Source image",
         modifier = Modifier
             .size(48.dp)
-            .clip(CircleShape), // ← corner radius
+            .clip(CircleShape),
         contentScale = ContentScale.Crop
     )
 }

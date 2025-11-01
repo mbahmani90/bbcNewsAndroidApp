@@ -20,7 +20,8 @@ class NewsSourceRepositoryImp(
 
     override suspend fun getSources(sourceParams: SourceParams): NewsResource<SourceDto> {
 
-        val sourceDto = newsClientApi.searchSources(sourceParams.apiKey)
+        val sourceDto = newsClientApi.searchSources(sourceParams.apiKey ,
+            sourceParams.category)
 
         return NewsResource.Success(sourceDto)
     }

@@ -33,7 +33,6 @@ fun WebViewWithLoading(url: String) {
         AndroidView(
             factory = { context ->
                 WebView(context).apply {
-//                    settings.javaScriptEnabled = true
                     webViewClient = WebViewClient()
                     webChromeClient = object : WebChromeClient() {
                         override fun onProgressChanged(view: WebView?, newProgress: Int) {
