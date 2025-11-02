@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -36,6 +37,7 @@ import com.cypress.bbcnewsapplication.AppThemeColors
 import com.cypress.bbcnewsapplication.Screen
 import com.cypress.bbcnewsapplication.commonComposables.noFeedbackClickable
 import com.cypress.bbcnewsapplication.data.repository.SourceParams
+import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -107,7 +109,8 @@ fun SourceListScreen(navController: NavController) {
                                         navController.navigate(
                                             Screen.HeadlineListScreen.createRoute(
                                                  apiKey , item.id , item.name))
-                                    },
+                                    }
+                                    .testTag("source_tag"),
                                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                             ) {
                                 Box(

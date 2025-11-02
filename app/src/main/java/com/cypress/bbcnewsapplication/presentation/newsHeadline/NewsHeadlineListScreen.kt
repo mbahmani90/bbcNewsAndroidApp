@@ -54,6 +54,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavController
 import com.cypress.bbcnewsapplication.Screen
 import com.cypress.bbcnewsapplication.commonComposables.SearchFieldComposable
@@ -225,7 +226,8 @@ fun NewsHeadlineListScreen(navController: NavController ,
                                                 Uri.encode(articleUrl)))
                                     }
 
-                                }) {
+                                }
+                                .testTag("headline_tag")) {
                                 SubcomposeAsyncImage(
                                     model = ImageRequest.Builder(context)
                                         .data(item.urlToImage)

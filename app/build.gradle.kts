@@ -15,8 +15,8 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-//        testInstrumentationRunner = "com.cypress.bbcnewsapplication.TestBbcNewsRunner"
+//        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.cypress.bbcnewsapplication.TestBbcNewsRunner"
     }
 
     buildTypes {
@@ -37,6 +37,18 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    packaging {
+        resources {
+            pickFirsts += listOf(
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.md",
+                "META-INF/LICENSE-notice.md",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.md",
+                "META-INF/NOTICE-notice.md"
+            )
+        }
     }
 }
 
@@ -94,6 +106,7 @@ dependencies {
 
     testImplementation("io.insert-koin:koin-test:4.1.1")
     testImplementation("com.squareup.okhttp3:mockwebserver:5.3.0")
+    androidTestImplementation("com.squareup.okhttp3:mockwebserver:5.3.0")
 
     testImplementation("org.robolectric:robolectric:4.16")
 
