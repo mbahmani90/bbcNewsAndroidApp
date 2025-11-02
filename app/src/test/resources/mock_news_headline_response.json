@@ -1,0 +1,136 @@
+{
+  "status": "ok",
+  "totalResults": 10,
+  "articles": [
+  {
+    "source": {
+      "id": "bbc-news",
+      "name": "BBC News"
+    },
+    "author": "BBC News",
+    "title": "Donald Trump orders military to prepare plans for 'action' in Nigeria",
+    "description": "The US president says his threat is over killings of Christians - though experts say there is no evidence they are disproportionately targeted.",
+    "url": "https://www.bbc.co.uk/news/articles/cev18jy21w7o",
+    "urlToImage": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/b7de/live/58bad5e0-b7d2-11f0-aa13-0b0479f6f42a.jpg",
+    "publishedAt": "2025-11-02T11:37:18.0682049Z",
+    "content": "Trump earlier announced that he had declared Nigeria a \"Country of Particular Concern\" because of the \"existential threat\" posed to its Christian population. He said \"thousands\" had been killed, with… [+1539 chars]"
+  },
+  {
+    "source": {
+      "id": "bbc-news",
+      "name": "BBC News"
+    },
+    "author": "BBC News",
+    "title": "Nine suffer life-threatening injuries in Huntingdon train stabbing, police say",
+    "description": "Police say a tenth victim with non life-threatening injuries was also transported to hospital.",
+    "url": "https://www.bbc.co.uk/news/articles/cd7rrpwl5zno",
+    "urlToImage": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/d6b9/live/1ab04100-b7a9-11f0-ba75-093eca1ac29b.jpg",
+    "publishedAt": "2025-11-02T11:07:23.8355667Z",
+    "content": "Prime Minister Sir Keir Starmer said in a post on X: \"The appalling incident on a train \"near Huntingdon is deeply concerning. \r\n\"My thoughts are with all those affected, and my thanks go to the emer… [+978 chars]"
+  },
+  {
+    "source": {
+      "id": "bbc-news",
+      "name": "BBC News"
+    },
+    "author": "BBC News",
+    "title": "King wants Andrew to lose last military title, minister says",
+    "description": "Defence Secretary John Healy says King Charles has \"indicated that's what he wishes\".",
+    "url": "https://www.bbc.co.uk/news/articles/c8675l25591o",
+    "urlToImage": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/80f6/live/7c70d570-b7d2-11f0-aa13-0b0479f6f42a.jpg",
+    "publishedAt": "2025-11-02T10:22:24.2097757Z",
+    "content": "Andrew had a 22-year career in the Royal Navy, and served as a helicopter pilot during the Falklands War.\r\nThis week, he lost his last remaining titles and privileges following months of pressure ove… [+507 chars]"
+  },
+  {
+    "source": {
+      "id": "bbc-news",
+      "name": "BBC News"
+    },
+    "author": "BBC News",
+    "title": "I blew the whistle on a massive tax fraud - and they sued me",
+    "description": "Jas Bains reflects a month on from the end of one of highest value civil cases ever heard in the UK.",
+    "url": "https://www.bbc.co.uk/news/articles/c2kp19ed78wo",
+    "urlToImage": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/de0f/live/2aef0270-9f8c-11f0-b741-177e3e2c2fc7.jpg",
+    "publishedAt": "2025-11-02T09:22:20.6469146Z",
+    "content": "But when the Danish tax authority, Skatteforvaltningen (Skat), launched its huge case, seeking to recover its lost money, Mr Bains was one of the more than 100 individual and corporate defendants ini… [+1229 chars]"
+  },
+  {
+    "source": {
+      "id": "bbc-news",
+      "name": "BBC News"
+    },
+    "author": "BBC News",
+    "title": "West Midlands: Women afraid to be out in public after racially aggravated rapes",
+    "description": "Asian women speak of their safety fears after incidents in Oldbury and Walsall.",
+    "url": "https://www.bbc.co.uk/news/articles/czxkw014rg9o",
+    "urlToImage": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/1287/live/ac61e230-b753-11f0-aa13-0b0479f6f42a.jpg",
+    "publishedAt": "2025-11-02T08:52:29.4444149Z",
+    "content": "We spoke to Asian women of different faiths in Birmingham and the Black Country who voiced concerns for their safety. Some said they had previously felt safe living here but were now scared of leavin… [+944 chars]"
+  },
+  {
+    "source": {
+      "id": "bbc-news",
+      "name": "BBC News"
+    },
+    "author": "BBC News",
+    "title": "What we know about Huntingdon train stabbings",
+    "description": "Nine people have life-threatening injuries, police say, with counter-terror police joining the investigation.",
+    "url": "https://www.bbc.co.uk/news/articles/c8r007d4kk2o",
+    "urlToImage": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/1517/live/53923850-b7c4-11f0-b2a1-6f537f66f9aa.jpg",
+    "publishedAt": "2025-11-02T08:52:28.8508119Z",
+    "content": "LNER, which operates East Coast Mainline services, urged passengers to avoid travelling on Sunday 2 November, external.\r\nTicketholders who are no longer planning to travel will be eligible for a full… [+1192 chars]"
+  },
+  {
+    "source": {
+      "id": "bbc-news",
+      "name": "BBC News"
+    },
+    "author": "BBC News",
+    "title": "Pregnant Bella Culley 'toasts bread over a candle flame' in Georgian prison",
+    "description": "Billingham teenager Bella Culley is facing two years in prison in Georgia, South Caucasus.",
+    "url": "https://www.bbc.co.uk/news/articles/c62065ynx5xo",
+    "urlToImage": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/ea8b/live/83e2b750-b41d-11f0-b2a1-6f537f66f9aa.jpg",
+    "publishedAt": "2025-11-02T06:37:28.6462883Z",
+    "content": "Speaking exclusively to the BBC, Bella Culley's mother reveals her daughter - now 35 weeks pregnant - has been transferred to a prison \"mother and baby\" unit. \r\nThis marks a significant change for th… [+936 chars]"
+  },
+  {
+    "source": {
+      "id": "bbc-news",
+      "name": "BBC News"
+    },
+    "author": "BBC News",
+    "title": "Andrew fixed palace visit for firm with £1.4m deal with ex-wife",
+    "description": "A company paying Sarah Ferguson was given a private tour of Buckingham Palace while the late Queen was in residence, BBC can reveal.",
+    "url": "https://www.bbc.co.uk/news/articles/cy5q05v0q1xo",
+    "urlToImage": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/9ce9/live/141686c0-b668-11f0-bb84-5d792dcc8544.jpg",
+    "publishedAt": "2025-11-02T06:37:22.4915724Z",
+    "content": "Mr Evers told the BBC they then met the Queen, although Mr Bloom disputed this.\r\nBoth Mr Evers and Mr Bloom were invited by the then-prince to his Pitch@Palace event - a Dragons' Den-style business p… [+1417 chars]"
+  },
+  {
+    "source": {
+      "id": "bbc-news",
+      "name": "BBC News"
+    },
+    "author": "BBC News",
+    "title": "How to cope with loneliness in your first year of university",
+    "description": "Many freshers come with high expectations of what they imagine will be the best years of their lives.",
+    "url": "https://www.bbc.co.uk/news/articles/cn4jw1xxz7lo",
+    "urlToImage": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/c40c/live/a82d4070-b667-11f0-b2a1-6f537f66f9aa.jpg",
+    "publishedAt": "2025-11-02T03:37:19.5849313Z",
+    "content": "Robert Medhurst spent most of his freshers' week looking at social media, reading posts about other students' fun nights out. \r\n\"I was just in bed,\" Robert recalls, describing the week as the lonelie… [+522 chars]"
+  },
+  {
+    "source": {
+      "id": "bbc-news",
+      "name": "BBC News"
+    },
+    "author": "BBC News",
+    "title": "Tourism to Xinjiang booms as China gives the region a makeover",
+    "description": "China has repackaged Xinjiang into a tourist haven, touting \"ethnic\" experiences that activists say it's trying to erase.",
+    "url": "https://www.bbc.co.uk/news/articles/c8x1rnnd5gjo",
+    "urlToImage": "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/6c6a/live/07514e70-b749-11f0-ba75-093eca1ac29b.jpg",
+    "publishedAt": "2025-11-02T03:22:20.6952388Z",
+    "content": "When Anna went for the second time, it was with her mother, who was eager to visit after watching a drama series set in the mountainous Altay prefecture in the north. The series, To the Wonder, was f… [+1682 chars]"
+  }
+]
+}

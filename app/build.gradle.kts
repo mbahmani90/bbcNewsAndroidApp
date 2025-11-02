@@ -93,7 +93,8 @@ dependencies {
 //    testImplementation(kotlin("test"))
 
     testImplementation("io.insert-koin:koin-test:4.1.1")
+    testImplementation("com.squareup.okhttp3:mockwebserver:5.3.0")
 
-//    testImplementation("org.jetbrains.kotlin:kotlin-test:2.2.21")
+    testImplementation("org.robolectric:robolectric:4.16")
 
 }

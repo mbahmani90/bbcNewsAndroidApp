@@ -1,6 +1,5 @@
 package com.cypress.bbcnewsapplication.data.dto
 
-import com.cypress.bbcnewsapplication.domain.model.NewsDomain
 import com.cypress.bbcnewsapplication.domain.model.NewsSourceDomain
 import com.cypress.bbcnewsapplication.domain.model.SourceDomain
 import kotlinx.serialization.Serializable
