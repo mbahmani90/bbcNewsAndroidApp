@@ -13,7 +13,7 @@ class NewsSourceUseCase(
     private val newsSourceRepository: NewsSourceRepository
 ) {
 
-    fun invoke(sourceParams: SourceParams) : Flow<NewsResource<SourceDomain>> = flow {
+    operator fun invoke(sourceParams: SourceParams) : Flow<NewsResource<SourceDomain>> = flow {
 
         try {
             emit(NewsResource.Loading())

@@ -33,7 +33,7 @@ class NewsHandlerViewModel(
 
     fun searchNewsHeadline(searchParams: SearchParams) {
 
-        newsHandlerUserCass.invoke(searchParams).onEach { result ->
+        newsHandlerUserCass(searchParams).onEach { result ->
             when(result){
                 is NewsResource.Error -> {
                     _newsHandlerState.value = _newsHandlerState.value.copy(

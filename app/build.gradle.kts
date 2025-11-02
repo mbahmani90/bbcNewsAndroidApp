@@ -15,8 +15,8 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+//        testInstrumentationRunner = "com.cypress.bbcnewsapplication.TestBbcNewsRunner"
     }
 
     buildTypes {
@@ -85,5 +85,15 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended:1.7.8")
 
     implementation("androidx.biometric:biometric:1.1.0")
+
+    testImplementation("io.mockk:mockk:1.14.6")
+    androidTestImplementation("io.mockk:mockk-android:1.14.6")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+//    testImplementation(kotlin("test"))
+
+    testImplementation("io.insert-koin:koin-test:4.1.1")
+
+//    testImplementation("org.jetbrains.kotlin:kotlin-test:2.2.21")
 
 }

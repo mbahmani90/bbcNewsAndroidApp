@@ -47,7 +47,7 @@ class SourceViewModel(
     val sourceState : State<SourceState> = _sourceState
 
     fun getSources(sourceParams: SourceParams){
-        newsSourceUseCase.invoke(sourceParams).onEach { result ->
+        newsSourceUseCase(sourceParams).onEach { result ->
             when(result){
                 is NewsResource.Error -> {
                     _sourceState.value = _sourceState.value.copy(
