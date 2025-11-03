@@ -26,7 +26,7 @@ data class SearchParams(
     var page: Int = 1
 )
 
-class NewsHandlerViewModel(
+class NewsHeadlineViewModel(
     private val newsHandlerUseCase: NewsHeadLineUseCase,
     private val newsHandlerUseCaseRxJava: NewsHeadLineUseCaseRxJava
 ) : ViewModel() {

@@ -6,8 +6,8 @@ import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
 import com.cypress.bbcnewsapplication.data.remote.NewsClientApi
 import com.cypress.bbcnewsapplication.data.remote.NewsClientApiRxJava
-import com.cypress.bbcnewsapplication.data.repository.NewsHandlerRepository
-import com.cypress.bbcnewsapplication.data.repository.NewsHandlerRepositoryImp
+import com.cypress.bbcnewsapplication.data.repository.NewsHeadlineRepository
+import com.cypress.bbcnewsapplication.data.repository.NewsHeadlineRepositoryImp
 import com.cypress.bbcnewsapplication.data.repository.NewsSourceRepository
 import com.cypress.bbcnewsapplication.data.repository.NewsSourceRepositoryImp
 import com.cypress.bbcnewsapplication.domain.usecase.NewsHeadLineUseCase
@@ -16,11 +16,12 @@ import com.cypress.bbcnewsapplication.domain.usecase.NewsSourceUseCase
 import com.cypress.bbcnewsapplication.domain.usecase.NewsSourceUseCaseRxJava
 import com.cypress.bbcnewsapplication.presentation.fingerPrint.FingerPrintInterface
 import com.cypress.bbcnewsapplication.presentation.fingerPrint.FingerPrintInterfaceImp
-import com.cypress.bbcnewsapplication.presentation.newsHeadline.NewsHandlerViewModel
+import com.cypress.bbcnewsapplication.presentation.newsHeadline.NewsHeadlineViewModel
 import com.cypress.bbcnewsapplication.presentation.sourceList.SourceViewModel
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
+import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
@@ -53,10 +54,10 @@ val platformModules = module {
             .create(NewsClientApiRxJava::class.java)
     }
 
-    singleOf(::NewsHandlerRepositoryImp).bind<NewsHandlerRepository>()
+    singleOf(::NewsHeadlineRepositoryImp).bind<NewsHeadlineRepository>()
     single { NewsHeadLineUseCase(get()) }
     single { NewsHeadLineUseCaseRxJava(get()) }
-    viewModelOf(::NewsHandlerViewModel)
+    viewModelOf(::NewsHeadlineViewModel)
 
 
     singleOf(::NewsSourceRepositoryImp).bind<NewsSourceRepository>()
@@ -64,9 +65,9 @@ val platformModules = module {
     single { NewsSourceUseCaseRxJava(get()) }
     viewModelOf(::SourceViewModel)
 
-    singleOf(::FingerPrintInterfaceImp).bind<FingerPrintInterface>()
+    factoryOf(::FingerPrintInterfaceImp).bind<FingerPrintInterface>()
 
-    single {
+    factory {
         val title = "title"
         val description = "description"
 

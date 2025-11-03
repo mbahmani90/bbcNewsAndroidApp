@@ -29,20 +29,30 @@ import com.cypress.bbcnewsapplication.Screen
 import com.cypress.bbcnewsapplication.commonComposables.noFeedbackClickable
 import org.koin.compose.koinInject
 
+sealed class FingerAuthResult<T>(val result : T? = null){
+
+    class OnSuccess<T>() : FingerAuthResult<T>()
+    class OnError<T>(result: T): FingerAuthResult<T>(result)
+    class OnFailed<T>(): FingerAuthResult<T>()
+
+}
+
 @Composable
 fun FingerPrintScreen(navController: NavController) {
 
     val context = LocalContext.current
     val activity = context as AppCompatActivity
+
     val fingerPrintInterface: FingerPrintInterface = koinInject()
+
     var bioAuthResultState by remember { mutableStateOf("") }
+
     val biometricPrompt by remember { mutableStateOf(BiometricPrompt(activity,
         BiometricAuthCallback {
-            bioAuthResultState = it
-            if (it == "Authentication Success") {
+            bioAuthResultState = it.result.toString()
+            if (it == FingerAuthResult.OnSuccess<String>()) {
                 navController.navigate(
-                    Screen.SourceListScreen.createRoute()
-                )
+                    Screen.SourceListScreen.createRoute()){ popUpTo(0) }
             }
         })) }
 
@@ -54,7 +64,7 @@ fun FingerPrintScreen(navController: NavController) {
             when(result){
                 is FingerPrintSupportResource.Error -> {
                     navController.navigate(
-                        Screen.SourceListScreen.createRoute())
+                        Screen.SourceListScreen.createRoute()){ popUpTo(0) }
                 }
                 is FingerPrintSupportResource.Success -> {
                     fingerPrintInterface.checkAuthentication(biometricPrompt)
@@ -90,21 +100,21 @@ fun FingerPrintScreen(navController: NavController) {
 }
 
 class BiometricAuthCallback(
-    private val onCallback: (String) -> Unit
+    private val onCallback: (FingerAuthResult<String>) -> Unit
 ) : BiometricPrompt.AuthenticationCallback() {
 
     override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
         super.onAuthenticationError(errorCode, errString)
-        onCallback(errString.toString())
+        onCallback(FingerAuthResult.OnError(errString.toString()))
     }
 
     override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
         super.onAuthenticationSucceeded(result)
-        onCallback("Authentication Success")
+        onCallback(FingerAuthResult.OnSuccess())
     }
 
     override fun onAuthenticationFailed() {
         super.onAuthenticationFailed()
-        onCallback("Authentication Failed")
+        onCallback(FingerAuthResult.OnFailed())
     }
 }

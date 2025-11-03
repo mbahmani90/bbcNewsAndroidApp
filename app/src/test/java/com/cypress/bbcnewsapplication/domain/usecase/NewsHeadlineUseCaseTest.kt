@@ -1,8 +1,8 @@
 package com.cypress.bbcnewsapplication.domain.usecase
 
 import com.cypress.bbcnewsapplication.data.remote.NewsClientApi
-import com.cypress.bbcnewsapplication.data.repository.NewsHandlerRepository
-import com.cypress.bbcnewsapplication.data.repository.NewsHandlerRepositoryImp
+import com.cypress.bbcnewsapplication.data.repository.NewsHeadlineRepository
+import com.cypress.bbcnewsapplication.data.repository.NewsHeadlineRepositoryImp
 import com.cypress.bbcnewsapplication.data.repository.NewsResource
 import com.cypress.bbcnewsapplication.domain.model.NewsDomain
 import com.cypress.bbcnewsapplication.presentation.newsHeadline.SearchParams
@@ -54,7 +54,7 @@ class NewsHeadlineUseCaseTest : KoinTest {
                             .build()
                             .create(NewsClientApi::class.java)
                     }
-                    single { NewsHandlerRepositoryImp(get()) as NewsHandlerRepository }
+                    single { NewsHeadlineRepositoryImp(get()) as NewsHeadlineRepository }
                     single { NewsHeadLineUseCase(get()) }
                 }
             )

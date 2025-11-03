@@ -7,7 +7,6 @@ import com.cypress.bbcnewsapplication.data.remote.NewsClientApiRxJava
 import com.cypress.bbcnewsapplication.presentation.newsHeadline.SearchParams
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Observable
 
 sealed class NewsResource<T>(val data: T? = null , val message: String? = null){
     class Loading<T>() : NewsResource<T>()
@@ -15,16 +14,16 @@ sealed class NewsResource<T>(val data: T? = null , val message: String? = null){
     class Error<T>(data: T? = null , message: String? = null) : NewsResource<T>(data , message)
 }
 
-interface NewsHandlerRepository {
+interface NewsHeadlineRepository {
     suspend fun searchNews(searchParams: SearchParams) : NewsResource<NewsDto>
 
     fun searchNewsRxJava(searchParams: SearchParams) : Flowable<NewsDto>
 }
 
-class NewsHandlerRepositoryImp(
+class NewsHeadlineRepositoryImp(
     private val newsClientApi: NewsClientApi,
     private val newsClientApiRxJava: NewsClientApiRxJava
-): NewsHandlerRepository {
+): NewsHeadlineRepository {
 
     override suspend fun searchNews(searchParams: SearchParams): NewsResource<NewsDto> {
 

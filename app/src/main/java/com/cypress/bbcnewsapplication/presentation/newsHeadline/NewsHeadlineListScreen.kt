@@ -69,16 +69,16 @@ fun NewsHeadlineListScreen(navController: NavController ,
 
     val context = LocalContext.current
 
-    val newsHandlerViewModel: NewsHandlerViewModel = koinViewModel()
+    val newsHeadlineViewModel: NewsHeadlineViewModel = koinViewModel()
     var query by remember { mutableStateOf("") }
 
     var page by remember { mutableIntStateOf(1) }
     val pageSize = 20
-    val newsHandlerState by remember { newsHandlerViewModel.newsHandlerState }
+    val newsHandlerState by remember { newsHeadlineViewModel.newsHandlerState }
 
     LaunchedEffect(Unit) {
         page = 1
-        newsHandlerViewModel.searchNewsHeadline(
+        newsHeadlineViewModel.searchNewsHeadline(
             SearchParams(sourceId , query, apiKey, page))
     }
 
@@ -144,7 +144,7 @@ fun NewsHeadlineListScreen(navController: NavController ,
 
                 SearchFieldComposable(Modifier.weight(1f).padding(8.dp)) { keyword ->
                     page = 1
-                    newsHandlerViewModel.searchNewsHeadline(
+                    newsHeadlineViewModel.searchNewsHeadline(
                         SearchParams(sourceId, keyword, apiKey, page)
                     )
                 }
@@ -178,7 +178,7 @@ fun NewsHeadlineListScreen(navController: NavController ,
                     IconButton(onClick = {
                         if (page > 1)
                             page--
-                        newsHandlerViewModel.searchNewsHeadline(
+                        newsHeadlineViewModel.searchNewsHeadline(
                             SearchParams(sourceId, query, apiKey, page)
                         )
                     }) {
@@ -197,7 +197,7 @@ fun NewsHeadlineListScreen(navController: NavController ,
                         IconButton(onClick = {
                             if (page * pageSize < newsDto.totalResults) {
                                 page++
-                                newsHandlerViewModel.searchNewsHeadline(
+                                newsHeadlineViewModel.searchNewsHeadline(
                                     SearchParams(sourceId, query, apiKey, page)
                                 )
                             }
