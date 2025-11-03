@@ -11,15 +11,24 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,37 +38,32 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.cypress.bbcnewsapplication.AppThemeColors
-import org.koin.compose.viewmodel.koinViewModel
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.ui.platform.testTag
-import androidx.navigation.NavController
 import com.cypress.bbcnewsapplication.Screen
 import com.cypress.bbcnewsapplication.commonComposables.SearchFieldComposable
 import com.cypress.bbcnewsapplication.commonComposables.TitleIconComposable
 import com.cypress.bbcnewsapplication.commonComposables.noFeedbackClickable
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun NewsHeadlineListScreen(navController: NavController ,
@@ -69,21 +73,27 @@ fun NewsHeadlineListScreen(navController: NavController ,
 
     val context = LocalContext.current
 
+    val focusRequester = remember { FocusRequester() }
     val newsHeadlineViewModel: NewsHeadlineViewModel = koinViewModel()
-    var query by remember { mutableStateOf("") }
-
-    var page by remember { mutableIntStateOf(1) }
     val pageSize = 20
-    val newsHandlerState by remember { newsHeadlineViewModel.newsHandlerState }
+    val newsHeadlineState by newsHeadlineViewModel.newsHeadlineState
 
     LaunchedEffect(Unit) {
-        page = 1
         newsHeadlineViewModel.searchNewsHeadline(
-            SearchParams(sourceId , query, apiKey, page))
+            SearchParams(sourceId , newsHeadlineState.query.text,
+                apiKey, newsHeadlineState.page))
+        if(newsHeadlineState.query.text.isNotEmpty()){
+            focusRequester.requestFocus()
+            newsHeadlineViewModel.updateQueryCursor()
+        }
     }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().padding(
+            WindowInsets.systemBars
+                .only(WindowInsetsSides.End)
+                .asPaddingValues()
+        ),
         topBar = {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -103,20 +113,6 @@ fun NewsHeadlineListScreen(navController: NavController ,
                     contentDescription = "Back",
                     tint = AppThemeColors.focusedSearchColor)
 
-//                AsyncImage(
-//                    model = ImageRequest.Builder(context)
-//                        .data(null)
-//                        .crossfade(true)
-//                        .memoryCachePolicy(CachePolicy.ENABLED)
-//                        .diskCachePolicy(CachePolicy.ENABLED)
-//                        .build(),
-//                    contentDescription = "source image",
-//                    modifier = Modifier.size(48.dp),
-//                    contentScale = ContentScale.Crop,
-//                    placeholder = painterResource(R.drawable.ic_menu_report_image),
-//                    error = painterResource(R.drawable.ic_menu_report_image)
-//                )
-
                 TitleIconComposable()
 
                 Spacer(modifier = Modifier.width(4.dp))
@@ -130,8 +126,8 @@ fun NewsHeadlineListScreen(navController: NavController ,
                         lineHeight = 14.sp
                     )
 
-                    Text(text = if(!newsHandlerState.isLoading) {
-                        "${newsHandlerState.newsDomain?.totalResults ?: "No"} news"
+                    Text(text = if(!newsHeadlineState.isLoading) {
+                        "${newsHeadlineState.newsDomain?.totalResults ?: "No"} news"
                         }else{
                             "Loading..."
                         },
@@ -142,11 +138,20 @@ fun NewsHeadlineListScreen(navController: NavController ,
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                SearchFieldComposable(Modifier.weight(1f).padding(8.dp)) { keyword ->
-                    page = 1
+                SearchFieldComposable(
+                    Modifier.weight(1f).padding(8.dp)
+                        .focusRequester(focusRequester),
+                    newsHeadlineState.query,
+                    { newText ->
+                        newsHeadlineViewModel.setQuery(newText)
+                    }
+                    ) { keyword ->
+                    newsHeadlineViewModel.setPage(1)
                     newsHeadlineViewModel.searchNewsHeadline(
-                        SearchParams(sourceId, keyword, apiKey, page)
-                    )
+                        SearchParams(sourceId ,
+                            newsHeadlineState.query.text,
+                            apiKey,
+                            newsHeadlineState.page))
                 }
 
             }
@@ -158,7 +163,7 @@ fun NewsHeadlineListScreen(navController: NavController ,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                if(newsHandlerState.isLoading){
+                if(newsHeadlineState.isLoading){
                     LinearProgressIndicator(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -176,11 +181,15 @@ fun NewsHeadlineListScreen(navController: NavController ,
                 ) {
 
                     IconButton(onClick = {
-                        if (page > 1)
-                            page--
+                        if (newsHeadlineState.page > 1){
+                            newsHeadlineViewModel.setPage(newsHeadlineState.page - 1)
+                        }
+
                         newsHeadlineViewModel.searchNewsHeadline(
-                            SearchParams(sourceId, query, apiKey, page)
-                        )
+                            SearchParams(sourceId ,
+                                newsHeadlineState.query.text,
+                                apiKey,
+                                newsHeadlineState.page))
                     }) {
                         Icon(
                             Icons.AutoMirrored.Filled.KeyboardArrowLeft,
@@ -189,17 +198,19 @@ fun NewsHeadlineListScreen(navController: NavController ,
                     }
 
                     Spacer(modifier = Modifier.width(6.dp))
-                    Text(text = "${page}", color = Color.Black)
+                    Text(text = "${newsHeadlineState.page}", color = Color.Black)
                     Spacer(modifier = Modifier.width(6.dp))
 
-                    newsHandlerState.newsDomain?.let { newsDto ->
+                    newsHeadlineState.newsDomain?.let { newsDto ->
 
                         IconButton(onClick = {
-                            if (page * pageSize < newsDto.totalResults) {
-                                page++
+                            if (newsHeadlineState.page * pageSize < newsDto.totalResults) {
+                                newsHeadlineViewModel.setPage(newsHeadlineState.page + 1)
                                 newsHeadlineViewModel.searchNewsHeadline(
-                                    SearchParams(sourceId, query, apiKey, page)
-                                )
+                                    SearchParams(sourceId ,
+                                        newsHeadlineState.query.text,
+                                        apiKey,
+                                        newsHeadlineState.page))
                             }
                         }) {
                             Icon(
@@ -214,7 +225,7 @@ fun NewsHeadlineListScreen(navController: NavController ,
 
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
 
-                    newsHandlerState.newsDomain?.let { newsList ->
+                    newsHeadlineState.newsDomain?.let { newsList ->
                         items(newsList.articles) { item ->
                             Column(modifier = Modifier
                                 .fillMaxWidth()

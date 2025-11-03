@@ -2,6 +2,8 @@ package com.cypress.bbcnewsapplication.presentation.newsHeadline
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cypress.bbcnewsapplication.data.repository.NewsResource
@@ -12,11 +14,13 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-data class NewsHandlerState(
+data class NewsHeadlineState(
     var isLoading: Boolean = false,
     var isSuccess: Boolean = false,
     var errorMessage: String = "",
-    var newsDomain: NewsDomain? = null
+    var newsDomain: NewsDomain? = null,
+    var query: TextFieldValue = TextFieldValue(""),
+    var page: Int = 1
 )
 
 data class SearchParams(
@@ -27,12 +31,12 @@ data class SearchParams(
 )
 
 class NewsHeadlineViewModel(
-    private val newsHandlerUseCase: NewsHeadLineUseCase,
-    private val newsHandlerUseCaseRxJava: NewsHeadLineUseCaseRxJava
+    private val newsHeadlineUseCase: NewsHeadLineUseCase,
+    private val newsHeadlineUseCaseRxJava: NewsHeadLineUseCaseRxJava
 ) : ViewModel() {
 
-    private var _newsHandlerState = mutableStateOf(NewsHandlerState())
-    val newsHandlerState : State<NewsHandlerState> = _newsHandlerState
+    private var _newsHeadlineState = mutableStateOf(NewsHeadlineState())
+    val newsHeadlineState : State<NewsHeadlineState> = _newsHeadlineState
 
     val compositeDisposable = CompositeDisposable()
 
@@ -43,19 +47,19 @@ class NewsHeadlineViewModel(
 
     fun searchNewsHeadlineCoroutine(searchParams: SearchParams) {
 
-        newsHandlerUseCase(searchParams).onEach { result ->
+        newsHeadlineUseCase(searchParams).onEach { result ->
             when(result){
                 is NewsResource.Error -> {
-                    _newsHandlerState.value = _newsHandlerState.value.copy(
+                    _newsHeadlineState.value = _newsHeadlineState.value.copy(
                         isLoading = false, isSuccess = false , errorMessage = "${result.message}"
                     )
                 }
                 is NewsResource.Loading -> {
-                    _newsHandlerState.value = _newsHandlerState.value.copy(
+                    _newsHeadlineState.value = _newsHeadlineState.value.copy(
                         isLoading = true , isSuccess = false , errorMessage = "")
                 }
                 is NewsResource.Success -> {
-                    _newsHandlerState.value = _newsHandlerState.value.copy(
+                    _newsHeadlineState.value = _newsHeadlineState.value.copy(
                         isLoading = false, isSuccess = true , errorMessage = "" ,
                         newsDomain = result.data
                     )
@@ -66,20 +70,20 @@ class NewsHeadlineViewModel(
     }
 
     fun searchNewsHeadlineRxJava(searchParams: SearchParams) {
-        val disposable = newsHandlerUseCaseRxJava(searchParams)
+        val disposable = newsHeadlineUseCaseRxJava(searchParams)
             .subscribe { result ->
                 when(result){
                     is NewsResource.Error -> {
-                        _newsHandlerState.value = _newsHandlerState.value.copy(
+                        _newsHeadlineState.value = _newsHeadlineState.value.copy(
                             isLoading = false, isSuccess = false , errorMessage = "${result.message}"
                         )
                     }
                     is NewsResource.Loading -> {
-                        _newsHandlerState.value = _newsHandlerState.value.copy(
+                        _newsHeadlineState.value = _newsHeadlineState.value.copy(
                             isLoading = true , isSuccess = false , errorMessage = "")
                     }
                     is NewsResource.Success -> {
-                        _newsHandlerState.value = _newsHandlerState.value.copy(
+                        _newsHeadlineState.value = _newsHeadlineState.value.copy(
                             isLoading = false, isSuccess = true , errorMessage = "" ,
                             newsDomain = result.data
                         )
@@ -87,6 +91,25 @@ class NewsHeadlineViewModel(
                 }
             }
         compositeDisposable.add(disposable)
+    }
+
+    fun setPage(page: Int){
+        _newsHeadlineState.value = _newsHeadlineState.value.copy(
+            page = page
+        )
+    }
+
+    fun setQuery(query: TextFieldValue){
+        _newsHeadlineState.value = _newsHeadlineState.value.copy(
+            query = query
+        )
+    }
+
+    fun updateQueryCursor(){
+        _newsHeadlineState.value = _newsHeadlineState.value.copy(
+            query = _newsHeadlineState.value.query.copy(
+                selection = TextRange(_newsHeadlineState.value.query.text.length))
+        )
     }
 
     override fun onCleared() {

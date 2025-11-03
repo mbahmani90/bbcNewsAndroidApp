@@ -14,22 +14,24 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.TextFieldValue
 import com.cypress.bbcnewsapplication.AppThemeColors
 
 
 @Composable
-fun SearchFieldComposable(modifier: Modifier, onSearch : (String) -> Unit ){
-
-    var searchText by remember { mutableStateOf("") }
+fun SearchFieldComposable(modifier: Modifier,
+                          searchText: TextFieldValue,
+                          onTextChange: (TextFieldValue) -> Unit,
+                          onSearch : (String) -> Unit ){
 
     TextField(
         value = searchText,
-        onValueChange = { searchText = it },
+        onValueChange = { onTextChange(it) },
         placeholder = { Text("Search...") },
         singleLine = true,
         trailingIcon = {
             Icon(modifier = Modifier.noFeedbackClickable {
-                onSearch(searchText)
+                onSearch(searchText.text)
             },
                 imageVector = Icons.Filled.Search,
                 contentDescription = "Search")
