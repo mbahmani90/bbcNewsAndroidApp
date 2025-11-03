@@ -7,8 +7,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -29,12 +33,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.cypress.bbcnewsapplication.AppThemeColors
 import com.cypress.bbcnewsapplication.Screen
+import com.cypress.bbcnewsapplication.common.toFlagEmoji
 import com.cypress.bbcnewsapplication.commonComposables.noFeedbackClickable
 import com.cypress.bbcnewsapplication.data.repository.SourceParams
 import org.koin.androidx.compose.koinViewModel
@@ -77,10 +85,13 @@ fun SourceListScreen(navController: NavController) {
                                         alpha = if(item.isSelected) 1f else 0f))
                                 .padding(horizontal = 10.dp , vertical = 6.dp)
                                 .noFeedbackClickable{
-                                    sourceViewModel.toggleCategoryItemSelection(item.name)
+                                    var tempCategory = ""
+                                    if(sourceViewModel.toggleCategoryItemSelection(item.name)){
+                                       tempCategory = item.name
+                                    }
                                     sourceViewModel.getSources(SourceParams(
                                         apiKey = apiKey,
-                                        category = item.name
+                                        category = tempCategory
                                     ))
                                 }
                             ,
@@ -104,22 +115,49 @@ fun SourceListScreen(navController: NavController) {
                                 modifier = Modifier
                                     .padding(8.dp)
                                     .aspectRatio(2f)
-                                    .clickable{
+                                    .noFeedbackClickable{
                                         navController.navigate(
                                             Screen.HeadlineListScreen.createRoute(
                                                  apiKey , item.id , item.name))
                                     }
                                     .testTag("source_tag"),
-                                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                                colors = CardDefaults.cardColors(containerColor = Color.White)
                             ) {
-                                Box(
-                                    contentAlignment = Alignment.Center,
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally,
                                     modifier = Modifier.fillMaxSize()
                                 ) {
                                     Text(
                                         text = item.name,
-                                        modifier = Modifier.padding(16.dp)
+                                        fontWeight = Bold,
+                                        modifier = Modifier.padding(
+                                            top = 8.dp, bottom = 2.dp,
+                                            start = 16.dp , end = 16.dp),
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis
                                     )
+                                    Spacer(modifier = Modifier.height(6.dp))
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        modifier = Modifier.fillMaxWidth().padding(
+                                            start = 16.dp , end = 16.dp,
+                                            bottom = 4.dp)
+                                    ) {
+                                        Text(
+                                            text = item.category.replaceFirstChar {
+                                                if (it.isLowerCase()) it.titlecase() else it.toString()
+                                            },
+                                            fontSize = 13.sp,
+                                            color = Color.DarkGray
+                                        )
+                                        Spacer(modifier = Modifier.weight(1f))
+                                        Text(
+                                            text = item.country.toFlagEmoji(),
+                                            fontSize = 16.sp,
+                                            color = Color.DarkGray
+                                        )
+                                    }
                                 }
                             }
                         }

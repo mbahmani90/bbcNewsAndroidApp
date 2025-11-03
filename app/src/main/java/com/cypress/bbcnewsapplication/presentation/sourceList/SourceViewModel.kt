@@ -106,7 +106,7 @@ class SourceViewModel(
         compositeDisposable.clear()
     }
 
-    fun toggleCategoryItemSelection(name: String) {
+    fun toggleCategoryItemSelection(name: String) : Boolean {
         val index = _categoryListState.indexOfFirst { it.name == name }
         if (index != -1) {
             val isCurrentlySelected = _categoryListState[index].isSelected
@@ -120,7 +120,9 @@ class SourceViewModel(
             if (!isCurrentlySelected) {
                 _categoryListState[index] = _categoryListState[index].copy(isSelected = true)
             }
+            return _categoryListState[index].isSelected
         }
+        return false
     }
 
 }

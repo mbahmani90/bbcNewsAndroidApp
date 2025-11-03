@@ -49,12 +49,17 @@ fun FingerPrintScreen(navController: NavController) {
 
     val biometricPrompt by remember { mutableStateOf(BiometricPrompt(activity,
         BiometricAuthCallback {
-            bioAuthResultState = it.result.toString()
-            if (it == FingerAuthResult.OnSuccess<String>()) {
-                navController.navigate(
-                    Screen.SourceListScreen.createRoute()){ popUpTo(0) }
+            bioAuthResultState = it.result ?: ""
+
+            when(it){
+                is FingerAuthResult.OnSuccess -> {
+                    navController.navigate(
+                        Screen.SourceListScreen.createRoute()){ popUpTo(0) }
+                }
+                else -> {}
             }
-        })) }
+        }))
+    }
 
     LaunchedEffect(Unit) {
 
