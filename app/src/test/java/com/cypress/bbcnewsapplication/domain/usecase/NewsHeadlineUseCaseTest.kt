@@ -1,6 +1,7 @@
 package com.cypress.bbcnewsapplication.domain.usecase
 
 import com.cypress.bbcnewsapplication.data.remote.NewsClientApi
+import com.cypress.bbcnewsapplication.data.remote.NewsClientApiRxJava
 import com.cypress.bbcnewsapplication.data.repository.NewsHeadlineRepository
 import com.cypress.bbcnewsapplication.data.repository.NewsHeadlineRepositoryImp
 import com.cypress.bbcnewsapplication.data.repository.NewsResource
@@ -26,6 +27,7 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import java.io.File
 import kotlin.test.assertEquals
 
@@ -46,6 +48,9 @@ class NewsHeadlineUseCaseTest : KoinTest {
         startKoin {
             modules(
                 module {
+
+                    single { Json { ignoreUnknownKeys = true } }
+
                     single<NewsClientApi> {
                         val json = Json { ignoreUnknownKeys = true }
                         Retrofit.Builder()
@@ -54,7 +59,16 @@ class NewsHeadlineUseCaseTest : KoinTest {
                             .build()
                             .create(NewsClientApi::class.java)
                     }
-                    single { NewsHeadlineRepositoryImp(get()) as NewsHeadlineRepository }
+                    single<NewsClientApiRxJava> {
+                        val json: Json = get()
+                        Retrofit.Builder()
+                            .baseUrl("https://newsapi.org/")
+                            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+                            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                            .build()
+                            .create(NewsClientApiRxJava::class.java)
+                    }
+                    single { NewsHeadlineRepositoryImp(get(), get()) as NewsHeadlineRepository }
                     single { NewsHeadLineUseCase(get()) }
                 }
             )

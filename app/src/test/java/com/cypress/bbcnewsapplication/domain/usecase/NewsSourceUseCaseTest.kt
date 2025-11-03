@@ -1,6 +1,7 @@
 package com.cypress.bbcnewsapplication.domain.usecase
 
 import com.cypress.bbcnewsapplication.data.remote.NewsClientApi
+import com.cypress.bbcnewsapplication.data.remote.NewsClientApiRxJava
 import com.cypress.bbcnewsapplication.data.repository.NewsResource
 import com.cypress.bbcnewsapplication.data.repository.NewsSourceRepository
 import com.cypress.bbcnewsapplication.data.repository.NewsSourceRepositoryImp
@@ -26,6 +27,7 @@ import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.robolectric.RobolectricTestRunner
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import java.io.File
 import kotlin.test.assertEquals
 
@@ -45,6 +47,9 @@ class NewsSourceUseCaseTest : KoinTest {
         startKoin {
             modules(
                 module {
+
+                    single { Json { ignoreUnknownKeys = true } }
+
                     single<NewsClientApi> {
                         val json = Json { ignoreUnknownKeys = true }
                         Retrofit.Builder()
@@ -53,7 +58,16 @@ class NewsSourceUseCaseTest : KoinTest {
                             .build()
                             .create(NewsClientApi::class.java)
                     }
-                    single { NewsSourceRepositoryImp(get()) as NewsSourceRepository }
+                    single<NewsClientApiRxJava>  {
+                        val json: Json = get()
+                        Retrofit.Builder()
+                            .baseUrl("https://newsapi.org/")
+                            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+                            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                            .build()
+                            .create(NewsClientApiRxJava::class.java)
+                    }
+                    single { NewsSourceRepositoryImp(get(), get()) as NewsSourceRepository }
                     single { NewsSourceUseCase(get()) }
                 }
             )
