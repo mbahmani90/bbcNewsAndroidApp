@@ -5,12 +5,15 @@ import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
 import com.cypress.bbcnewsapplication.data.remote.NewsClientApi
+import com.cypress.bbcnewsapplication.data.remote.NewsClientApiRxJava
 import com.cypress.bbcnewsapplication.data.repository.NewsHandlerRepository
 import com.cypress.bbcnewsapplication.data.repository.NewsHandlerRepositoryImp
 import com.cypress.bbcnewsapplication.data.repository.NewsSourceRepository
 import com.cypress.bbcnewsapplication.data.repository.NewsSourceRepositoryImp
 import com.cypress.bbcnewsapplication.domain.usecase.NewsHeadLineUseCase
+import com.cypress.bbcnewsapplication.domain.usecase.NewsHeadLineUseCaseRxJava
 import com.cypress.bbcnewsapplication.domain.usecase.NewsSourceUseCase
+import com.cypress.bbcnewsapplication.domain.usecase.NewsSourceUseCaseRxJava
 import com.cypress.bbcnewsapplication.presentation.fingerPrint.FingerPrintInterface
 import com.cypress.bbcnewsapplication.presentation.fingerPrint.FingerPrintInterfaceImp
 import com.cypress.bbcnewsapplication.presentation.newsHeadline.NewsHandlerViewModel
@@ -23,6 +26,7 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 
 val platformModules = module {
 
@@ -39,13 +43,25 @@ val platformModules = module {
             .create(NewsClientApi::class.java)
     }
 
+    single {
+        val json: Json = get()
+        Retrofit.Builder()
+            .baseUrl("https://newsapi.org/")
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+            .build()
+            .create(NewsClientApiRxJava::class.java)
+    }
+
     singleOf(::NewsHandlerRepositoryImp).bind<NewsHandlerRepository>()
     single { NewsHeadLineUseCase(get()) }
+    single { NewsHeadLineUseCaseRxJava(get()) }
     viewModelOf(::NewsHandlerViewModel)
 
 
     singleOf(::NewsSourceRepositoryImp).bind<NewsSourceRepository>()
     single { NewsSourceUseCase(get()) }
+    single { NewsSourceUseCaseRxJava(get()) }
     viewModelOf(::SourceViewModel)
 
     singleOf(::FingerPrintInterfaceImp).bind<FingerPrintInterface>()

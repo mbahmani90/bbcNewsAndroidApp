@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.onEach
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateListOf
+import com.cypress.bbcnewsapplication.domain.usecase.NewsSourceUseCaseRxJava
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 data class SourceState(
     var isLoading : Boolean = false,
@@ -26,7 +28,8 @@ data class CategoryDataClass(
 )
 
 class SourceViewModel(
-    private val newsSourceUseCase: NewsSourceUseCase
+    private val newsSourceUseCase: NewsSourceUseCase,
+    private val newsSourceUseCaseRxJava: NewsSourceUseCaseRxJava
 ) : ViewModel() {
 
     private val _categoryListState = mutableStateListOf(
@@ -45,8 +48,14 @@ class SourceViewModel(
     private var _sourceState = mutableStateOf(SourceState())
 
     val sourceState : State<SourceState> = _sourceState
+    private val compositeDisposable = CompositeDisposable()
 
     fun getSources(sourceParams: SourceParams){
+//        getSourcesCoroutine(sourceParams)
+        getSourcesRxJava(sourceParams)
+    }
+
+    fun getSourcesCoroutine(sourceParams: SourceParams){
         newsSourceUseCase(sourceParams).onEach { result ->
             when(result){
                 is NewsResource.Error -> {
@@ -66,6 +75,35 @@ class SourceViewModel(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun getSourcesRxJava(sourceParams: SourceParams){
+        val disposable = newsSourceUseCaseRxJava(sourceParams)
+            .subscribe{ result ->
+            when(result){
+                is NewsResource.Error -> {
+                    _sourceState.value = _sourceState.value.copy(
+                        isLoading = false, isSuccess = false,
+                        errorMessage = "", sourceDomain = null)
+                }
+                is NewsResource.Loading -> {
+                    _sourceState.value = _sourceState.value.copy(
+                        isLoading = true, isSuccess = false,
+                        errorMessage = "")
+                }
+                is NewsResource.Success -> {
+                    _sourceState.value = _sourceState.value.copy(
+                        isLoading = false, isSuccess = true,
+                        errorMessage = "", sourceDomain = result.data)
+                }
+            }
+        }
+        compositeDisposable.add(disposable)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
     }
 
     fun toggleCategoryItemSelection(name: String) {

@@ -37,7 +37,6 @@ import com.cypress.bbcnewsapplication.AppThemeColors
 import com.cypress.bbcnewsapplication.Screen
 import com.cypress.bbcnewsapplication.commonComposables.noFeedbackClickable
 import com.cypress.bbcnewsapplication.data.repository.SourceParams
-import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 
 
