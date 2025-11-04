@@ -1,11 +1,9 @@
 package com.cypress.bbcnewsapplication
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavHost
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,10 +13,10 @@ import com.cypress.bbcnewsapplication.ScreenArgumentsKey.API_KEY
 import com.cypress.bbcnewsapplication.ScreenArgumentsKey.ARTICLE_URL
 import com.cypress.bbcnewsapplication.ScreenArgumentsKey.SOURCE_ID
 import com.cypress.bbcnewsapplication.ScreenArgumentsKey.SOURCE_NAME
-import com.cypress.bbcnewsapplication.presentation.fingerPrint.FingerPrintScreen
-import com.cypress.bbcnewsapplication.presentation.newsDetails.NewsDetailsScreen
-import com.cypress.bbcnewsapplication.presentation.newsHeadline.NewsHeadlineListScreen
-import com.cypress.bbcnewsapplication.presentation.sourceList.SourceListScreen
+import com.cypress.bbcnewsapplication.presentation.ui.fingerPrint.FingerPrintScreen
+import com.cypress.bbcnewsapplication.presentation.ui.newsDetails.NewsDetailsScreen
+import com.cypress.bbcnewsapplication.presentation.ui.newsHeadline.NewsHeadlineListScreen
+import com.cypress.bbcnewsapplication.presentation.ui.sourceList.SourceListScreen
 import com.cypress.bbcnewsapplication.ui.theme.BbcNewsApplicationTheme
 
 object ScreenArgumentsKey{
@@ -54,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             BbcNewsApplicationTheme {
 
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = Screen.FingerPrintScreen.route) {
+                NavHost(navController = navController, startDestination = Screen.SourceListScreen.route) {
 
                     composable(
                         route = Screen.FingerPrintScreen.route

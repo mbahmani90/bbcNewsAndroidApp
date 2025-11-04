@@ -1,4 +1,4 @@
-package com.cypress.bbcnewsapplication.presentation.sourceList
+package com.cypress.bbcnewsapplication.presentation.viewModel
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -51,8 +51,8 @@ class SourceViewModel(
     private val compositeDisposable = CompositeDisposable()
 
     fun getSources(sourceParams: SourceParams){
-//        getSourcesCoroutine(sourceParams)
-        getSourcesRxJava(sourceParams)
+        getSourcesCoroutine(sourceParams)
+//        getSourcesRxJava(sourceParams)
     }
 
     fun getSourcesCoroutine(sourceParams: SourceParams){

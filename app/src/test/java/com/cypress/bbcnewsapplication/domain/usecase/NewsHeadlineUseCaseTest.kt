@@ -6,7 +6,7 @@ import com.cypress.bbcnewsapplication.data.repository.NewsHeadlineRepository
 import com.cypress.bbcnewsapplication.data.repository.NewsHeadlineRepositoryImp
 import com.cypress.bbcnewsapplication.data.repository.NewsResource
 import com.cypress.bbcnewsapplication.domain.model.NewsDomain
-import com.cypress.bbcnewsapplication.presentation.newsHeadline.SearchParams
+import com.cypress.bbcnewsapplication.presentation.viewModel.SearchParams
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import junit.framework.TestCase
 import kotlinx.coroutines.flow.take

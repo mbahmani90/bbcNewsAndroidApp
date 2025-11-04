@@ -4,7 +4,7 @@ package com.cypress.bbcnewsapplication.data.repository
 import com.cypress.bbcnewsapplication.data.dto.NewsDto
 import com.cypress.bbcnewsapplication.data.remote.NewsClientApi
 import com.cypress.bbcnewsapplication.data.remote.NewsClientApiRxJava
-import com.cypress.bbcnewsapplication.presentation.newsHeadline.SearchParams
+import com.cypress.bbcnewsapplication.presentation.viewModel.SearchParams
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
 

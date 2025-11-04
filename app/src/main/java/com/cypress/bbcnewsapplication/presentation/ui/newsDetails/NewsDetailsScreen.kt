@@ -1,4 +1,4 @@
-package com.cypress.bbcnewsapplication.presentation.newsDetails
+package com.cypress.bbcnewsapplication.presentation.ui.newsDetails
 
 import android.net.Uri
 import androidx.compose.foundation.layout.Box

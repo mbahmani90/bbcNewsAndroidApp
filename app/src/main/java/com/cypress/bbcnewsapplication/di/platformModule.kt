@@ -14,10 +14,10 @@ import com.cypress.bbcnewsapplication.domain.usecase.NewsHeadLineUseCase
 import com.cypress.bbcnewsapplication.domain.usecase.NewsHeadLineUseCaseRxJava
 import com.cypress.bbcnewsapplication.domain.usecase.NewsSourceUseCase
 import com.cypress.bbcnewsapplication.domain.usecase.NewsSourceUseCaseRxJava
-import com.cypress.bbcnewsapplication.presentation.fingerPrint.FingerPrintInterface
-import com.cypress.bbcnewsapplication.presentation.fingerPrint.FingerPrintInterfaceImp
-import com.cypress.bbcnewsapplication.presentation.newsHeadline.NewsHeadlineViewModel
-import com.cypress.bbcnewsapplication.presentation.sourceList.SourceViewModel
+import com.cypress.bbcnewsapplication.presentation.ui.fingerPrint.FingerPrintInterface
+import com.cypress.bbcnewsapplication.presentation.ui.fingerPrint.FingerPrintInterfaceImp
+import com.cypress.bbcnewsapplication.presentation.viewModel.NewsHeadlineViewModel
+import com.cypress.bbcnewsapplication.presentation.viewModel.SourceViewModel
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType

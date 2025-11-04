@@ -1,4 +1,4 @@
-package com.cypress.bbcnewsapplication.presentation.fingerPrint
+package com.cypress.bbcnewsapplication.presentation.ui.fingerPrint
 
 import android.hardware.biometrics.BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE
 import android.hardware.biometrics.BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE

@@ -4,7 +4,7 @@ import com.cypress.bbcnewsapplication.data.dto.toDomain
 import com.cypress.bbcnewsapplication.data.repository.NewsHeadlineRepository
 import com.cypress.bbcnewsapplication.data.repository.NewsResource
 import com.cypress.bbcnewsapplication.domain.model.NewsDomain
-import com.cypress.bbcnewsapplication.presentation.newsHeadline.SearchParams
+import com.cypress.bbcnewsapplication.presentation.viewModel.SearchParams
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.schedulers.Schedulers

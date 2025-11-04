@@ -1,4 +1,4 @@
-package com.cypress.bbcnewsapplication.presentation.fingerPrint
+package com.cypress.bbcnewsapplication.presentation.ui.fingerPrint
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager

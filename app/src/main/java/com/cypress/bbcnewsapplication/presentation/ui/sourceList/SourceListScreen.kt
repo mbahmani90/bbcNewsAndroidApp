@@ -1,10 +1,8 @@
-package com.cypress.bbcnewsapplication.presentation.sourceList
+package com.cypress.bbcnewsapplication.presentation.ui.sourceList
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -45,6 +43,7 @@ import com.cypress.bbcnewsapplication.Screen
 import com.cypress.bbcnewsapplication.common.toFlagEmoji
 import com.cypress.bbcnewsapplication.commonComposables.noFeedbackClickable
 import com.cypress.bbcnewsapplication.data.repository.SourceParams
+import com.cypress.bbcnewsapplication.presentation.viewModel.SourceViewModel
 import org.koin.androidx.compose.koinViewModel
 
 

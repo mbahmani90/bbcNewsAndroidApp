@@ -1,4 +1,4 @@
-package com.cypress.bbcnewsapplication.presentation.newsHeadline
+package com.cypress.bbcnewsapplication.presentation.ui.newsHeadline
 
 
 import android.R
@@ -63,6 +63,8 @@ import com.cypress.bbcnewsapplication.Screen
 import com.cypress.bbcnewsapplication.commonComposables.SearchFieldComposable
 import com.cypress.bbcnewsapplication.commonComposables.TitleIconComposable
 import com.cypress.bbcnewsapplication.commonComposables.noFeedbackClickable
+import com.cypress.bbcnewsapplication.presentation.viewModel.NewsHeadlineViewModel
+import com.cypress.bbcnewsapplication.presentation.viewModel.SearchParams
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -80,8 +82,11 @@ fun NewsHeadlineListScreen(navController: NavController ,
 
     LaunchedEffect(Unit) {
         newsHeadlineViewModel.searchNewsHeadline(
-            SearchParams(sourceId , newsHeadlineState.query.text,
-                apiKey, newsHeadlineState.page))
+            SearchParams(
+                sourceId, newsHeadlineState.query.text,
+                apiKey, newsHeadlineState.page
+            )
+        )
         if(newsHeadlineState.query.text.isNotEmpty()){
             focusRequester.requestFocus()
             newsHeadlineViewModel.updateQueryCursor()
@@ -148,10 +153,13 @@ fun NewsHeadlineListScreen(navController: NavController ,
                     ) { keyword ->
                     newsHeadlineViewModel.setPage(1)
                     newsHeadlineViewModel.searchNewsHeadline(
-                        SearchParams(sourceId ,
+                        SearchParams(
+                            sourceId,
                             newsHeadlineState.query.text,
                             apiKey,
-                            newsHeadlineState.page))
+                            newsHeadlineState.page
+                        )
+                    )
                 }
 
             }
@@ -186,10 +194,13 @@ fun NewsHeadlineListScreen(navController: NavController ,
                         }
 
                         newsHeadlineViewModel.searchNewsHeadline(
-                            SearchParams(sourceId ,
+                            SearchParams(
+                                sourceId,
                                 newsHeadlineState.query.text,
                                 apiKey,
-                                newsHeadlineState.page))
+                                newsHeadlineState.page
+                            )
+                        )
                     }) {
                         Icon(
                             Icons.AutoMirrored.Filled.KeyboardArrowLeft,
@@ -207,10 +218,13 @@ fun NewsHeadlineListScreen(navController: NavController ,
                             if (newsHeadlineState.page * pageSize < newsDto.totalResults) {
                                 newsHeadlineViewModel.setPage(newsHeadlineState.page + 1)
                                 newsHeadlineViewModel.searchNewsHeadline(
-                                    SearchParams(sourceId ,
+                                    SearchParams(
+                                        sourceId,
                                         newsHeadlineState.query.text,
                                         apiKey,
-                                        newsHeadlineState.page))
+                                        newsHeadlineState.page
+                                    )
+                                )
                             }
                         }) {
                             Icon(

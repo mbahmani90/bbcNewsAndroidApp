@@ -1,4 +1,4 @@
-package com.cypress.bbcnewsapplication.presentation.newsHeadline
+package com.cypress.bbcnewsapplication.presentation.viewModel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -41,8 +41,8 @@ class NewsHeadlineViewModel(
     val compositeDisposable = CompositeDisposable()
 
     fun searchNewsHeadline(searchParams: SearchParams){
-//        searchNewsHeadlineCoroutine(searchParams)
-        searchNewsHeadlineRxJava(searchParams)
+        searchNewsHeadlineCoroutine(searchParams)
+//        searchNewsHeadlineRxJava(searchParams)
     }
 
     fun searchNewsHeadlineCoroutine(searchParams: SearchParams) {

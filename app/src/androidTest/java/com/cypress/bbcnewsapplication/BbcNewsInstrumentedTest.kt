@@ -38,10 +38,10 @@ class BbcNewsInstrumentedTest {
         composeRule.onNodeWithText("ABC News").performClick()
 
         composeRule.waitUntil(timeoutMillis = 20000) {
-            composeRule.onAllNodes(hasTextContainingSubstring("profits")).fetchSemanticsNodes().isNotEmpty()
+            composeRule.onAllNodes(hasTextContainingSubstring("eastern")).fetchSemanticsNodes().isNotEmpty()
         }
 
-        composeRule.onAllNodes(hasTextContainingSubstring("profits"))
+        composeRule.onAllNodes(hasTextContainingSubstring("eastern"))
             .onFirst()
             .performClick()
 
