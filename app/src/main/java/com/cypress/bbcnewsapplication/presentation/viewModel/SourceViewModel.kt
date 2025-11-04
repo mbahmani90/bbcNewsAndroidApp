@@ -125,4 +125,12 @@ class SourceViewModel(
         return false
     }
 
+    fun getSelectedCategory() : String? {
+        val index = _categoryListState.indexOfFirst { it.isSelected }
+        if (index != -1) {
+            return _categoryListState[index].name
+        }
+        return null
+    }
+
 }

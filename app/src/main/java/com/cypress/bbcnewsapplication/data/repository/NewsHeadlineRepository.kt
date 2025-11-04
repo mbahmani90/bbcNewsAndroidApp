@@ -1,6 +1,5 @@
 package com.cypress.bbcnewsapplication.data.repository
 
-
 import com.cypress.bbcnewsapplication.data.dto.NewsDto
 import com.cypress.bbcnewsapplication.data.remote.NewsClientApi
 import com.cypress.bbcnewsapplication.data.remote.NewsClientApiRxJava

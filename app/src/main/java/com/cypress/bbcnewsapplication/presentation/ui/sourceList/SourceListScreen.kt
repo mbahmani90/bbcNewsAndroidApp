@@ -56,9 +56,10 @@ fun SourceListScreen(navController: NavController) {
     var apiKey by remember { mutableStateOf("b0fa1fc2ee984834aaceb8f77d7f6185") }
 
     LaunchedEffect(Unit) {
+        val tempCategory = sourceViewModel.getSelectedCategory() ?: ""
         sourceViewModel.getSources(SourceParams(
             apiKey = apiKey,
-            category = ""
+            category = tempCategory
         ))
     }
 

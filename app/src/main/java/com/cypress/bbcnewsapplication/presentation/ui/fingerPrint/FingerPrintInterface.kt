@@ -9,7 +9,7 @@ import androidx.biometric.BiometricPrompt
 
 sealed class FingerPrintSupportResource<T>(val data: T? = null) {
     class Success<T>() : FingerPrintSupportResource<T>()
-    class Error<T>(data: T) : FingerPrintSupportResource<T>()
+    class Error<T>(data: T) : FingerPrintSupportResource<T>(data)
 }
 
 interface FingerPrintInterface{

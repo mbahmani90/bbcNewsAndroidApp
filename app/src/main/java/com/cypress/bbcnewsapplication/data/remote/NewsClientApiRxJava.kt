@@ -2,7 +2,6 @@ package com.cypress.bbcnewsapplication.data.remote
 
 import com.cypress.bbcnewsapplication.data.dto.NewsDto
 import com.cypress.bbcnewsapplication.data.dto.SourceDto
-import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query

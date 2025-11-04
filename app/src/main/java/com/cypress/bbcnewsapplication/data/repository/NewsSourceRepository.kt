@@ -5,7 +5,6 @@ import com.cypress.bbcnewsapplication.data.remote.NewsClientApi
 import com.cypress.bbcnewsapplication.data.remote.NewsClientApiRxJava
 import io.reactivex.rxjava3.core.BackpressureStrategy
 import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Observable
 
 data class SourceParams(
     var category: String,
